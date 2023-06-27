@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views import View
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-
+from django.contrib.auth import authenticate, login , logout
+from django.contrib.auth.hashers import check_password
 # Create your views here.
 
 
@@ -19,9 +20,22 @@ class login_page(View):
         return render(request, "authsystem/login_page.html")
 
     def post(self,request):
-        username = request.POST.get("username")
-        password = request.POST.get("pass")
-        return HttpResponse(f"{username} \n {password}")
+        uname = request.POST.get("username")
+        passw = request.POST.get("pass")
+
+        # user = authenticate(request, username = uname , password = passw)
+        user = User.objects.get(username = uname)
+
+
+
+        # print(uname)
+        # print(passw)
+
+        if check_password(passw, user.password):
+            login(request , user)
+            return redirect("home_page")
+
+        return HttpResponse("Username or password was incorrect!")
 
 
 
@@ -35,5 +49,16 @@ class register_page(View):
         username = request.POST.get("username")
         email = request.POST.get("email")
         password = request.POST.get("pass")
+
+        user = User(username = username , email = email)
+        user.set_password(password)
+        user.first_name = fname
+        user.last_name = lname
+        user.save()
+
         return HttpResponse(f"{fname} \n {lname} \n {email} \n {username} \n{password}")
 
+
+def logout_user(request):
+    logout(request)
+    return redirect('login_page')
