@@ -1,0 +1,26 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static "authsystem/logre.css" %}">
+</head>
+
+<body>
+    <div class="container">
+        <form action="/register" method="POST">
+            {% csrf_token %}
+            <input type="text" placeholder="Enter first name" name="fname">
+            <input type="text" placeholder="Enter last name" name="lname">
+            <input type="text" placeholder="Enter username" name="username">
+            <input type="text" placeholder="Enter email" name="email">
+            <input type="password" placeholder="Enter password" name="pass">
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+
+</html>
