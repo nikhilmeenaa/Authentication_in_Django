@@ -23,15 +23,14 @@ class login_page(View):
         uname = request.POST.get("username")
         passw = request.POST.get("pass")
 
-        # user = authenticate(request, username = uname , password = passw)
-        user = User.objects.get(username = uname)
-
-
+        user = authenticate(request, username = uname , password = passw)
+        # user = User.objects.get(username = uname)
 
         # print(uname)
         # print(passw)
 
-        if check_password(passw, user.password):
+        # if check_password(passw, user.password):
+        if user is not None:
             login(request , user)
             return redirect("home_page")
 
@@ -62,3 +61,6 @@ class register_page(View):
 def logout_user(request):
     logout(request)
     return redirect('login_page')
+
+
+    
