@@ -125,4 +125,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # STATIC_DIRS = 
 
-SESSION_COOKIE_AGE = 10
+SESSION_COOKIE_AGE = 1000
+
+AUTH_USER_MODEL = "authsystem.CustomModel"

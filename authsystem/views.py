@@ -6,6 +6,10 @@ from django.contrib.auth import authenticate, login , logout
 from django.contrib.auth.hashers import check_password
 # Create your views here.
 
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 
 class home_page(View):
     def get(self,request):
@@ -20,10 +24,10 @@ class login_page(View):
         return render(request, "authsystem/login_page.html")
 
     def post(self,request):
-        uname = request.POST.get("username")
+        email = request.POST.get("username")
         passw = request.POST.get("pass")
 
-        user = authenticate(request, username = uname , password = passw)
+        user = authenticate(request, email = email , password = passw)
         # user = User.objects.get(username = uname)
 
         # print(uname)
@@ -63,4 +67,3 @@ def logout_user(request):
     return redirect('login_page')
 
 
-    
